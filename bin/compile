@@ -20,7 +20,7 @@ if [ -f Gemfile ]; then
 
     gem install bundler --no-rdoc --no-ri
     bundle install --path=$VENDOR_DIR/bundler --deployment
-    sed -i 's/BUNDLE_PATH:.*/BUNDLE_PATH: \/app\/vendor\/bundler/' .bundle/config
+    sed -i 's/BUNDLE_PATH:.*/BUNDLE_PATH: \/app\/vendor\/bundler/' $1/.bundle/config
   ) | sed -u 's/^/  /'
 fi
 
