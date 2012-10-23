@@ -15,6 +15,7 @@ echo "  Installed version $VERSION"
 if [ -f Gemfile ]; then
   echo "Installing Ruby Dependencies"
   (
+    set -x
     GEM_HOME=$VENDOR_DIR/bundle/ruby/1.9.1/gems/
     PATH=$VENDOR_DIR/bundle/ruby/1.9.1/bin:$PATH
 
