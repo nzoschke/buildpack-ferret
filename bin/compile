@@ -16,7 +16,7 @@ if [ -f Gemfile ]; then
   echo "Installing Ruby Dependencies"
   (
     export GEM_HOME=$VENDOR_DIR/bundle/ruby/1.9.1/gems/
-    export PATH=$VENDOR_DIR/bundle/ruby/1.9.1/bin:$PATH
+    export PATH=$VENDOR_DIR/bundle/ruby/1.9.1/gems/bin:$PATH
 
     gem install bundler --no-rdoc --no-ri
     bundle install --path=$VENDOR_DIR/bundle
@@ -28,6 +28,6 @@ cat >$PROFILE_DIR/00-buildpack-ferret.sh <<'EOF'
 export GEM_HOME=/app/vendor/bundle/ruby/1.9.1/gems/
 export HOST=$(/sbin/ifconfig | sed -n 's/.*inet addr:\([0-9.]\+\)\s.*/\1/p' | head -1)
 export LANG=en_US.UTF-8
-export PATH=/app/vendor/heroku-client/bin:/app/vendor/bundle/ruby/1.9.1/bin:${PATH}
+export PATH=/app/vendor/bundle/ruby/1.9.1/gems/bin:/app/vendor/heroku-client/bin:/app/vendor/bundle/ruby/1.9.1/bin:${PATH}
 export USER=$(whoami)
 EOF
