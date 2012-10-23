@@ -12,9 +12,21 @@ curl -s http://assets.heroku.com.s3.amazonaws.com/heroku-client/heroku-client.tg
 VERSION=$(ruby -r$VENDOR_DIR/heroku-client/lib/heroku/version -e "puts Heroku::VERSION")
 echo "  Installed version $VERSION"
 
-cat >$PROFILE_DIR/00-ferret-buildpack.sh <<'EOF'
+if [ -f Gemfile ]; then
+  echo "Installing Ruby Dependencies"
+  (
+    GEM_HOME=$VENDOR_DIR/bundle/ruby/1.9.1/gems/
+    PATH=$VENDOR_DIR/bundle/ruby/1.9.1/bin:$PATH
+
+    gem install bundler --no-rdoc --no-ri
+    bundle install --path=$VENDOR_DIR/bundle
+  ) | sed -u 's/^/  /'
+fi
+
+cat >$PROFILE_DIR/00-buildpack-ferret.sh <<'EOF'
 #!/bin/bash
+export GEM_HOME=/app/vendor/bundle/ruby/1.9.1/gems/
 export HOST=$(/sbin/ifconfig | sed -n 's/.*inet addr:\([0-9.]\+\)\s.*/\1/p' | head -1)
-export PATH=/app/vendor/heroku-client/bin:${PATH}
+export PATH=/app/vendor/heroku-client/bin:/app/vendor/bundle/ruby/1.9.1/bin:${PATH}
 export USER=$(whoami)
 EOF
