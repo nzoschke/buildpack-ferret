@@ -16,6 +16,7 @@ if [ -f Gemfile ]; then
   echo "Installing Ruby Dependencies"
   (
     export GEM_HOME=$VENDOR_DIR/bundler/ruby/1.9.1/gems/
+    export LANG=en_US.UTF-8
     export PATH=$VENDOR_DIR/bundler/ruby/1.9.1/gems/bin:$PATH
 
     gem install bundler --no-rdoc --no-ri
